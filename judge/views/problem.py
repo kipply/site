@@ -529,6 +529,10 @@ def problem_submit(request, problem, submission=None):
 
     profile = request.profile
     problem = get_object_or_404(Problem, code=problem)
+
+    if (profile.language == 'ZIG'):
+        problem.code = problem.code.replace('\r', '')
+
     if not problem.is_accessible_by(request.user):
         if request.method == 'POST':
             user_logger.info('Naughty user %s wants to submit to %s without permission',
